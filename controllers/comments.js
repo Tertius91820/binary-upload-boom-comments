@@ -7,9 +7,22 @@ module.exports = {
         comment: req.body.comment,
         likes: 0,
         post: req.params.id,
+        createdById:req.user.id,
+        createdBy:req.user.userName,
       });
       console.log("Comment has been added!");
       res.redirect("/post/"+req.params.id);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  deleteComment: async (req, res) => {
+    try {
+      await Comment.deleteOne({
+        _id:req.params.commentsid
+      });
+      console.log("Comment has been deleted!");
+      res.redirect("/post/"+req.params.postid);
     } catch (err) {
       console.log(err);
     }
